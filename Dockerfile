@@ -30,9 +30,14 @@ RUN apt-get update && \
     apt-get install -y docker-ce docker-ce-cli containerd.io && \
     rm -rf /var/lib/apt/lists/*
 
-# Install python and python modules
+# Install python and system dependencies for cryptography
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-pip python3-wheel
+    python3-pip python3-wheel \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir --upgrade cryptography azure-core
