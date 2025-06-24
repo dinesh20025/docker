@@ -1,0 +1,22 @@
+name: Test Dockerfile
+
+on:
+  push:
+    paths:
+      - 'ado-agent-docker'
+  pull_request:
+    paths:
+      - 'ado-agent-docker'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t test-ado-agent -f ado-agent-docker .
+
+      - name: Run container and check Python version
+        run: docker run --rm test-ado-agent python3 --version
