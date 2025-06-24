@@ -1,0 +1,19 @@
+name: Test Dockerfile
+
+on:
+  push:
+    branches:
+      - main  # Trigger on changes to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t test-ado-agent -f Dockerfile .
+
+      - name: Run container and check Python version
+        run: docker run --rm test-ado-agent python3 --version
